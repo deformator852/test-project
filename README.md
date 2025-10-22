@@ -16,8 +16,6 @@ This project implements a simple telemetry system consisting of a **Sensor Node*
 
 ## Setup
 
-### 1. Create virtual environments
-
 ```bash
 # Telemetry Sink
 cd telemetry_sink
@@ -30,3 +28,28 @@ cd ../sensor_node
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+## Run
+
+### Sensor Node
+```bash
+cd sensor_node
+source venv/bin/activate
+python main.py \
+  --sensor-name sensor1 \
+  --rate 1 \
+  --sink-url http://localhost:8080/telemetry
+```
+
+### Telemetry sink
+```bash
+cd telemetry_sink
+source venv/bin/activate
+python main.py \
+  --bind 0.0.0.0:8080 \
+  --log-path telemetry.log \
+  --buffer-size 4096 \
+  --flush-interval 0.5 \
+  --rate-limit 10240 \
+```
